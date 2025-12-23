@@ -1,0 +1,55 @@
+Senior Software Engineer - AI/ML Platform
+
+Company: TechCorp Inc.
+Location: San Francisco, CA (Remote/Hybrid)
+Type: Full-time
+
+Job Description:
+
+We are seeking an experienced Senior Software Engineer to join our AI/ML platform team. You will be responsible for building scalable, production-ready systems that power our machine learning infrastructure and AI-powered applications.
+
+Key Responsibilities:
+- Design and develop scalable web applications and microservices using modern frameworks
+- Build and maintain RESTful APIs and GraphQL endpoints for AI/ML services
+- Implement vector database solutions for semantic search and recommendation systems
+- Work with machine learning models, transformer architectures, and NLP frameworks
+- Collaborate with ML engineers to deploy and optimize AI models in production
+- Develop and maintain CI/CD pipelines for automated testing and deployment
+- Optimize application performance, database queries, and API response times
+- Mentor junior developers and conduct code reviews to maintain high code quality
+- Work with cloud infrastructure (AWS, Docker, Kubernetes) to deploy scalable services
+
+Required Qualifications:
+- 5+ years of professional software development experience
+- Strong proficiency in Python and JavaScript/TypeScript
+- Experience with FastAPI, Django, or similar Python web frameworks
+- Experience with React, Next.js, or similar frontend frameworks
+- Solid understanding of database design and optimization (PostgreSQL, MongoDB)
+- Experience with vector databases (Pinecone, Weaviate, or similar)
+- Knowledge of AI/ML frameworks (LangChain, HuggingFace, OpenAI API)
+- Experience building and deploying containerized applications (Docker, Kubernetes)
+- Understanding of cloud platforms (AWS, GCP, or Azure)
+- Strong problem-solving skills and ability to work in a fast-paced environment
+- Excellent communication and collaboration skills
+
+Preferred Qualifications:
+- Experience with transformer models and NLP tasks
+- Knowledge of PyTorch, TensorFlow, or similar ML frameworks
+- Experience with recommendation systems and semantic search
+- AWS or cloud platform certifications
+- Experience with CI/CD tools (GitHub Actions, Jenkins, GitLab CI)
+- Experience mentoring junior developers
+- Contributions to open-source projects
+
+What We Offer:
+- Competitive salary and equity package
+- Comprehensive health, dental, and vision insurance
+- Flexible work arrangements (remote/hybrid options)
+- Professional development opportunities
+- Collaborative and innovative work environment
+
+How to Apply:
+Please submit your resume and a brief cover letter explaining why you're interested in this role.
+
+
+
