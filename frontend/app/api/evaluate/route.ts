@@ -24,16 +24,20 @@ async function extractTextFromFile(file: File): Promise<string> {
 
 const ANALYSIS_PROMPT = `You are an expert resume analyzer. Analyze how well a resume matches a job description.
 
+SCORING (use the full 0-100 range; do not cluster in 70-85):
+- 85-100: Resume clearly meets almost all must-have requirements; strong evidence for key skills/experience. Use rarely.
+- 70-84: Good match; most key requirements met, minor gaps only.
+- 50-69: Partial match; some important requirements met, several gaps or weak evidence.
+- 30-49: Weak match; major requirements missing or only loosely related experience.
+- 0-29: Poor match; resume does not align with job (wrong field, missing core requirements). Use when truly not a fit.
+
 Job Description:
 {{job_description}}
 
 Resume Context:
 {{resume_context}}
 
-Return your analysis as a single valid JSON object with exactly these keys: fit_score (number 0-100), gaps (array of objects with requirement, status, evidence), strengths (array of strings), evidence (array of objects with requirement, resume_evidence, relevance_score), tailored_bullets (array of strings), cover_letter_snippet (string).
-
-Example shape:
-{"fit_score": 75, "gaps": [{"requirement": "...", "status": "partial", "evidence": "..."}], "strengths": ["..."], "evidence": [{"requirement": "...", "resume_evidence": "...", "relevance_score": 0.9}], "tailored_bullets": ["..."], "cover_letter_snippet": "..."}
+Return your analysis as a single valid JSON object with exactly these keys: fit_score (number 0-100), gaps (array of objects with requirement, status, evidence), strengths (array of strings), evidence (array of objects with requirement, resume_evidence, relevance_score), tailored_bullets (array of strings), cover_letter_snippet (string). Be strict: only give high scores when the resume clearly demonstrates the job requirements.
 
 You must respond with ONLY the JSON object, no markdown, no code fences, no explanation.`;
 
