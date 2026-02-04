@@ -241,11 +241,12 @@ async def evaluate_role_fit(
         
         user_id = "anonymous"
         
-        # Run RAG pipeline
-        result = await run_rag_pipeline(
+        # Use in-memory context so we analyze THIS resume vs THIS job description
+        # (Pinecone is not populated in one-shot evaluate, so RAG would return wrong/empty context)
+        from app.services.rag_pipeline import run_evaluate_in_memory
+        result = await run_evaluate_in_memory(
             resume_text=resume_text,
             job_description=job_description,
-            user_id=user_id
         )
         
         # Generate full cover letter

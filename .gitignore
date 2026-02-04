@@ -21,10 +21,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment
+# Environment (do not commit secrets)
 .env
 .env.local
 .env*.local
+**/.env
+backend/.env
 
 # IDE
 .vscode/
@@ -42,4 +44,7 @@ Thumbs.db
 *.seed
 *.pid.lock
 
-
+# Markdown docs (keep only README.md and frontend/README.md)
+*.md
+!README.md
+!frontend/README.md

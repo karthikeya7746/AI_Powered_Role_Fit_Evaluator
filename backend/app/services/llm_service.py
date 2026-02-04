@@ -59,29 +59,12 @@ Based on the job description and the resume information provided, analyze the fi
 5. Tailored bullets - suggested resume bullet points tailored to this job
 6. Cover letter snippet - a brief paragraph highlighting the best match
 
-Return your analysis in the following JSON format:
-{{
-    "fit_score": <number 0-100>,
-    "gaps": [
-        {{
-            "requirement": "<specific requirement from JD>",
-            "status": "missing" or "partial",
-            "evidence": "<why this is missing/partial>"
-        }}
-    ],
-    "strengths": ["<strength 1>", "<strength 2>", ...],
-    "evidence": [
-        {{
-            "requirement": "<requirement from JD>",
-            "resume_evidence": "<matching content from resume>",
-            "relevance_score": <number 0-1>
-        }}
-    ],
-    "tailored_bullets": ["<bullet 1>", "<bullet 2>", ...],
-    "cover_letter_snippet": "<brief paragraph>"
-}}
+Return your analysis as a single valid JSON object with exactly these keys: fit_score (number 0-100), gaps (array of objects with requirement, status, evidence), strengths (array of strings), evidence (array of objects with requirement, resume_evidence, relevance_score), tailored_bullets (array of strings), cover_letter_snippet (string).
 
-Be specific and evidence-based. Only include requirements that are clearly stated in the job description."""
+Example shape:
+{{"fit_score": 75, "gaps": [{{"requirement": "...", "status": "partial", "evidence": "..."}}], "strengths": ["..."], "evidence": [{{"requirement": "...", "resume_evidence": "...", "relevance_score": 0.9}}], "tailored_bullets": ["..."], "cover_letter_snippet": "..."}}
+
+You must respond with ONLY the JSON object, no markdown, no code fences, no explanation before or after."""
 
     prompt = PromptTemplate(
         template=prompt_template,
@@ -97,10 +80,17 @@ Be specific and evidence-based. Only include requirements that are clearly state
     # Get LLM response
     if settings.llm_provider == "openai":
         response = llm.invoke(formatted_prompt)
-        content = response.content
+        content = getattr(response, "content", None) or str(response)
     else:  # ollama
         response = llm(formatted_prompt)
-        content = response
+        content = response if isinstance(response, str) else str(response)
+    
+    if not content or not content.strip():
+        raise ValueError(
+            "LLM returned an empty response. Check your API key, rate limits, and that the model is available."
+        )
+    
+    content = content.strip()
     
     # Parse JSON from response
     try:
@@ -117,12 +107,17 @@ Be specific and evidence-based. Only include requirements that are clearly state
     except json.JSONDecodeError as e:
         # Fallback: try to extract JSON object
         import re
-        json_match = re.search(r'\{.*\}', content, re.DOTALL)
+        json_match = re.search(r'\{[\s\S]*\}', content)
         if json_match:
-            data = json.loads(json_match.group())
-            return FitScoreResponse(**data)
-        else:
-            raise ValueError(f"Failed to parse LLM response as JSON: {str(e)}")
+            try:
+                data = json.loads(json_match.group())
+                return FitScoreResponse(**data)
+            except (json.JSONDecodeError, TypeError):
+                pass
+        raise ValueError(
+            f"Failed to parse LLM response as JSON: {e}. "
+            f"Response preview: {content[:500]!r}"
+        )
 
 
 @traceable
