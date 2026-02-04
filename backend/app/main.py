@@ -25,10 +25,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS middleware
+# CORS: localhost + optional deployed frontend (e.g. Vercel)
+_cors_origins = ["http://localhost:3000", "http://localhost:3001"]
+if settings.cors_origins:
+    _cors_origins = _cors_origins + [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

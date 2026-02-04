@@ -48,7 +48,9 @@ export default function Home() {
   const [evidenceExpanded, setEvidenceExpanded] = useState(false);
   const [coverLetterExpanded, setCoverLetterExpanded] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  // Use external backend if set (e.g. Render); otherwise same-origin /api (Vercel-only)
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+  const evaluateUrl = API_BASE ? `${API_BASE.replace(/\/$/, '')}/evaluate` : '/api/evaluate';
 
   const handleFileSelect = (file: File) => {
     setResumeFile(file);
@@ -77,7 +79,7 @@ export default function Home() {
       formData.append('job_description', jobDescription);
 
       const response = await axios.post<EvaluationResult>(
-        `${API_URL}/evaluate`,
+        evaluateUrl,
         formData,
         {
           headers: {

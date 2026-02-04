@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     embedding_provider: str = "huggingface"  # openai or huggingface
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     
+    # CORS (for Vercel frontend; comma-separated URLs, e.g. https://myapp.vercel.app)
+    cors_origins: str = ""
+    
     class Config:
         env_file = ".env"
         case_sensitive = False

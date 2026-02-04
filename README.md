@@ -252,6 +252,35 @@ Access LangSmith dashboard at https://smith.langchain.com
 - Set `EMBEDDING_PROVIDER=openai`
 - Provide `OPENAI_API_KEY`
 
+## 🚀 Deploy to Vercel
+
+The **frontend** can be deployed on [Vercel](https://vercel.com). The **backend** (FastAPI) must be hosted separately (e.g. [Railway](https://railway.app), [Render](https://render.com), or another service that runs Python/Docker).
+
+### 1. Deploy the backend first
+
+- Deploy the FastAPI app (e.g. Railway: connect repo, set **Root Directory** to `backend`, add env vars from `.env`, deploy).
+- Note the backend URL (e.g. `https://your-api.railway.app`).
+- Add **CORS**: set `CORS_ORIGINS` to your Vercel frontend URL (e.g. `https://your-app.vercel.app`). You can add this after the frontend is deployed.
+
+### 2. Deploy the frontend on Vercel
+
+1. Go to [vercel.com](https://vercel.com) → **Add New** → **Project**.
+2. **Import** your Git repository (e.g. `karthikeya7746/AI_Powered_Role_Fit_Evaluator`).
+3. **Root Directory**: click **Edit** and set to **`frontend`**.
+4. **Environment Variables**: add  
+   - `NEXT_PUBLIC_API_URL` = your backend URL (e.g. `https://your-api.railway.app`).
+5. Click **Deploy**. Vercel will build and host the Next.js app.
+
+### 3. Allow the frontend in backend CORS
+
+On your backend host, set:
+
+- `CORS_ORIGINS` = your Vercel URL (e.g. `https://ai-powered-role-fit-evaluator.vercel.app`).
+
+Use a comma-separated list if you have multiple (e.g. preview + production).
+
+After this, the Vercel app will call your backend and the full flow will work.
+
 ## 📄 License
 
 MIT

@@ -1,0 +1,13 @@
+# Render Blueprint: deploy backend only (root set to backend via dashboard)
+# Use this as reference; create the Web Service manually and set Root Directory to "backend".
+services:
+  - type: web
+    name: resume-matcher-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      # Add the rest in Render Dashboard: Variables (PINECONE_API_KEY, OPENAI_API_KEY, MONGODB_URI, LLM_PROVIDER, CORS_ORIGINS, etc.)
